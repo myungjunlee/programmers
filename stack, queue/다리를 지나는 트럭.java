@@ -30,6 +30,8 @@ class Solution {
                 sum = truck_weight;
                 answer += bridge_length;
             }
+
+            // token regeneration
         }
         
         answer += 1
