@@ -2,14 +2,14 @@ import java.util.Collections;
 import java.util.PriorityQueue;
 
 class Solution {
-    public int[] solution(String[] arguments) {
+    public int[] solution(String[] operations) {
         int[] answer = {0,0};
 
         PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
         PriorityQueue<Integer> reverse_pq = new PriorityQueue<Integer>(Collections.reverseOrder());
 
-        for(int i=0; i<arguments.length; i++) {
-            String temp[] = arguments[i].split(" ");
+        for(int i=0; i<operations.length; i++) {
+            String temp[] = operations[i].split(" ");
             switch(temp[0]) {
             case "I" : 
                 pq.add(Integer.parseInt(temp[1]));
