@@ -17,7 +17,7 @@ class Solution {
                 answer = -1;
                 break;
             }
-            first_element = queue.poll();
+            first_element = queue.poll();x
             second_element = queue.poll();
             new_element = first_element + second_element*2;
             queue.offer(new_element);

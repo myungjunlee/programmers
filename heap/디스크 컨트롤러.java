@@ -24,7 +24,7 @@ class Solution {
                 pq.add(jobs[jobsIdx++]);
             }
 
-            // 큐가 비어있다면 작업 완료(end) 이후에 다시 요청이 들어온다는 의미
+           ㅊ // 큐가 비어있다면 작업 완료(end) 이후에 다시 요청이 들어온다는 의미
             // (end를 요청의 가장 처음으로 맞춰줌)
             if (pq.isEmpty()) {
                 end = jobs[jobsIdx][0];
