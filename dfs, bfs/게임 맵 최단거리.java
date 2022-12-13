@@ -1,60 +1,44 @@
 import java.util.*;
 
 class Solution {
-    PriorityQueue<Integer> pq = new PriorityQueue<>();
-    public int solution(int[][] maps) {
-        int answer = 0;
-        int row = maps.length;
-        int col = maps[0].length;
-        boolean[][] visited = new boolean[row][col];
+    int[][] maps, visited;
+    int row_length, col_length;
+    int[] distance_row = {0,0,1,-1};
+    int[] distance_col = {1,-1,0,0};
+    
+    void bfs() {
+        visited[0][0] = 1;
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(new int[]{0,0});
         
-        dfs(maps, visited, 0, 0, answer);
-        
-        if (pq.isEmpty()) {
-            answer = -1;
-        } else {
-            answer = pq.poll();
+        while (!queue.isEmpty()) {
+            int curr[] = queue.remove();
+            int current_row = curr[0];
+            int current_col = curr[1];
+            
+            for (int i = 0; i < 4; i++) {
+                int next_row = current_row + distance_row[i];
+                int next_col = current_col + distance_col[i];
+                
+                if (next_row >= row_length || next_col < 0 || next_col >= col_length || next_row < 0) continue;
+                if (visited[next_row][next_col] == 0 && maps[next_row][next_col] == 1) {
+                    visited[next_row][next_col] = visited[current_row][current_col] + 1;
+                    queue.add(new int[]{next_row, next_col});
+                }
+            }
         }
-        return answer;
     }
     
-    void dfs(int[][] maps, boolean[][] visited, int i, int j, int answer) {
-        int row = maps.length;
-        int col = maps[0].length;
-        visited[i][j] = true;
-        boolean[][] pre_visited = new boolean[row][col];
-        answer++;
+    public int solution(int[][] maps) {
+        int answer = 0;
+        row_length = maps.length;
+        col_length = maps[0].length;
+        visited = new int[row_length][col_length];
+        this.maps = maps;
         
-        if (i==row-1 && j==col-1) {
-            pq.offer(answer);
-        } else {
-            if (i-1>=0 && maps[i-1][j] == 1 && !visited[i-1][j]) {
-                for(int m=0; m<row; m++)
-                    for(int n=0;n<col;n++)
-                        pre_visited[m][n] = visited[m][n];
-                dfs(maps,pre_visited,i-1,j,answer);
-            }
-
-            if (j-1>=0 && maps[i][j-1] == 1 && !visited[i][j-1]) {
-                for(int m=0; m<row; m++)
-                    for(int n=0;n<col;n++)
-                        pre_visited[m][n] = visited[m][n];
-                dfs(maps,pre_visited,i,j-1,answer);
-            }
-
-            if (i+1<row && maps[i+1][j] == 1 && !visited[i+1][j]) {
-                for(int m=0; m<row; m++)
-                    for(int n=0;n<col;n++)
-                        pre_visited[m][n] = visited[m][n];
-                dfs(maps,pre_visited,i+1,j,answer);
-            }
-
-            if (j+1<col && maps[i][j+1] == 1 && !visited[i][j+1]) {
-                for(int m=0; m<row; m++)
-                    for(int n=0;n<col;n++)
-                        pre_visited[m][n] = visited[m][n];
-                dfs(maps,pre_visited,i,j+1,answer);
-            }
-        }
+        bfs();
+        answer = visited[row_length - 1][col_length - 1] == 0 ? - 1 : visited[row_length - 1][col_length - 1];
+        
+        return answer;
     }
 }
